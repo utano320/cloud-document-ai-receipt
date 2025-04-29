@@ -28,27 +28,28 @@ for filename in os.listdir(RECEIPT_FOLDER):
             # 日付・店名抽出
             date, store = extract_date_and_store(text)
 
-            if date:  # date が存在する場合（store が「未取得」でも処理を続行）
-                safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
-                new_filename_base = f"{date}_{safe_store}"
-                new_filename = f"{new_filename_base}.jpg"
-                new_path = os.path.join(RENAMED_FOLDER, new_filename)
+            safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
+            new_filename_base = f"{date}_{safe_store}"
+            new_filename = f"{new_filename_base}.jpg"
+            new_path = os.path.join(RENAMED_FOLDER, new_filename)
 
-                # 画像ファイルコピーしてリネーム
-                shutil.copy(file_path, new_path)
+            safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
+            new_filename_base = f"{date}_{safe_store}"
+            new_filename = f"{new_filename_base}.jpg"
+            new_path = os.path.join(RENAMED_FOLDER, new_filename)
 
-                # OCR結果をlogsに保存
-                now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-                log_filename = f"{new_filename_base}_{now_str}.txt"
-                log_path = os.path.join(LOGS_FOLDER, log_filename)
+            # 画像ファイルコピーしてリネーム
+            shutil.copy(file_path, new_path)
 
-                with open(log_path, "w", encoding="utf-8") as f:
-                    f.write(text)
+            # OCR結果をlogsに保存
+            now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+            log_filename = f"{new_filename_base}_{now_str}.txt"
+            log_path = os.path.join(LOGS_FOLDER, log_filename)
 
-                print(f"✅ {new_filename} にリネーム & OCR結果保存しました！")
+            with open(log_path, "w", encoding="utf-8") as f:
+                f.write(text)
 
-            else:
-                print(f"⚠️ 日付の抽出に失敗しました: {filename}")
+            print(f"✅ {new_filename} にリネーム & OCR結果保存しました！")
 
         except Exception as e:
             print(f"❌ エラーが発生しました: {e}")
