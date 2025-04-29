@@ -1,0 +1,8 @@
+config/settings.json
+keys/*.json
+logs/*.json
+receipts/*.jpg
+receipts/*.png
+renamed_receipts/*.jpg
+renamed_receipts/*.png
+__pycache__
