@@ -19,36 +19,49 @@
 2. プロセッサーを作成
 3. プロセッサー ID をコピーしておく
 
-## ローカル環境（Python）の準備
+## 環境準備
+
+### Python 　の依存パッケージをインストール
 
 ```
 pip install google-cloud-documentai
 pip install google-auth
 ```
 
+### 必要なファイルの配置
+
+- `config/settings_default.json` をコピーして `config/settings.json`を作成し、プロジェクト ID、プロセッサー ID をセット
+- `keys/service-account.json` としてサービスアカウントの認証キーを配置
+- `receipts`ディレクトリ配下に元データとなるレシートの画像ファイルを配置
+
 ## ディレクトリ構成
 
 ```
-receipt_ocr_project/
+cloud-document-ai-receipt/
 │
-├── receipts/              # スキャンした元レシート画像たち
-│   ├── 20250429_123456.jpg
-│   ├── 20250429_789012.jpg
-│   └── ...
+├── config/                # 設定ファイル
+│   └── settings.json
 │
-├── renamed_receipts/       # リネーム後のレシート画像たち
+├── keys/                  # サービスアカウントの認証キー(JSONファイル)
+│   └── service-account.json
 │
-├── keys/                   # サービスアカウントの認証キー(JSONファイル)
-│   └── your-service-account.json
+├── logs/                  # ログファイル
 │
-├── ocr/                    # OCR処理に関するモジュール
-│   ├── __init__.py
+├── ocr/                   # OCR処理に関するモジュール
 │   ├── document_ai_client.py  # Document AIとやり取りするコード
 │   └── text_extractor.py      # テキストから日付・店名を抽出するコード
 │
-├── main.py                 # メインの実行スクリプト
+├── receipts/              # スキャンした元レシート画像たち
 │
-├── requirements.txt        # 必要なPythonライブラリ一覧
+├── renamed_receipts/      # リネーム後のレシート画像たち
 │
-└── README.md               # 使い方メモ（あとから自分用に書けると◎）
+├── main.py                # メインの実行スクリプト
+│
+├── requirements.txt       # 必要なPythonライブラリ一覧
+│
+└── README.md              # 使い方メモ
 ```
+
+## 実行
+
+`python main.py`
