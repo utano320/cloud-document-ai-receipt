@@ -28,9 +28,10 @@ for filename in os.listdir(RECEIPT_FOLDER):
             # 日付・店名抽出
             date, store = extract_date_and_store(text)
 
-            if not store:
-                print(f"⚠️ 店名の抽出に失敗しました: {filename}")
-                continue
+            safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
+            new_filename_base = f"{date}_{safe_store}"
+            new_filename = f"{new_filename_base}.jpg"
+            new_path = os.path.join(RENAMED_FOLDER, new_filename)
 
             safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
             new_filename_base = f"{date}_{safe_store}"

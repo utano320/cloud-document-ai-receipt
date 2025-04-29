@@ -2,11 +2,25 @@
 
 import re
 from ocr.document_ai_client import MIN_YEAR, MAX_YEAR, DEFAULT_YEAR
+import json
+import os
 
 def extract_date_and_store(text: str):
     """
     OCRテキストから日付と店名を抽出する
     """
+    settings_path = "config/settings.json"
+    preferred_store_names = []
+    excluded_store_names = []
+    
+    if os.path.exists(settings_path):
+        try:
+            with open(settings_path, "r", encoding="utf-8") as f:
+                settings = json.load(f)
+                preferred_store_names = settings.get("preferred_store_names", [])
+                excluded_store_names = settings.get("excluded_store_names", [])
+        except Exception:
+            pass
 
     # --- 日付を抽出 ---
     date_patterns = [
@@ -55,11 +69,31 @@ def extract_date_and_store(text: str):
         date = f"{DEFAULT_YEAR}0101"
 
     # --- 店名を抽出 ---
-    store = None
-    lines = text.splitlines()
-    for line in lines:
-        if 2 <= len(line.strip()) <= 30 and not re.search(r"\d", line):
-            store = line.strip()
-            break
+    store = "未取得"  # デフォルト値を「未取得」に設定
+    
+    if preferred_store_names:
+        lines = text.splitlines()
+        for line in lines:
+            line = line.strip()
+            for preferred_name in preferred_store_names:
+                if preferred_name in line:
+                    store = line
+                    break
+            if store != "未取得":
+                break
+    
+    if store == "未取得":
+        lines = text.splitlines()
+        for line in lines:
+            line_stripped = line.strip()
+            if line_stripped and 2 <= len(line_stripped) <= 30 and not re.search(r"\d", line_stripped):
+                is_excluded = False
+                for excluded_name in excluded_store_names:
+                    if excluded_name in line_stripped:
+                        is_excluded = True
+                        break
+                if not is_excluded:
+                    store = line_stripped
+                    break
 
     return date, store

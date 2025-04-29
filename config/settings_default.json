@@ -4,5 +4,7 @@
   "processor_id": "YOUR_PROCESSOR_ID",
   "min_year": 2000,
   "max_year": 2030,
-  "default_year": 2023
+  "default_year": 2023,
+  "preferred_store_names": [],
+  "excluded_store_names": []
 }
