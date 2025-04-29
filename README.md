@@ -57,6 +57,8 @@ cloud-document-ai-receipt/
 │
 ├── main.py                # メインの実行スクリプト
 │
+├── cleanup.sh             # ログと画像ファイルのクリーンアップスクリプト
+│
 ├── requirements.txt       # 必要なPythonライブラリ一覧
 │
 └── README.md              # 使い方メモ
@@ -65,3 +67,31 @@ cloud-document-ai-receipt/
 ## 実行
 
 `python main.py`
+
+## クリーンアップ
+
+処理済みのファイルをクリーンアップするには、`cleanup.sh` スクリプトを使用します。
+
+### 基本的な使用方法
+
+```bash
+# logsディレクトリのtxtファイルとrenamed_receiptsディレクトリの画像ファイルを削除
+./cleanup.sh
+```
+
+このコマンドは以下の処理を行います：
+- `logs/` ディレクトリ内の `.txt` ファイルを削除
+- `renamed_receipts/` ディレクトリ内の画像ファイル (`.jpg`, `.jpeg`, `.png`) を削除
+- 削除したファイル数を表示
+
+### 全てのファイルを削除
+
+```bash
+# logsディレクトリ、renamed_receiptsディレクトリ、receiptsディレクトリの全ファイルを削除
+./cleanup.sh --all
+```
+
+`--all` オプションを使用すると、上記に加えて：
+- `receipts/` ディレクトリ内の画像ファイルも削除します
+
+注意: デフォルトでは `receipts/` ディレクトリのファイルは削除されません。
