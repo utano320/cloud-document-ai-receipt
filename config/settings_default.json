@@ -1,5 +1,8 @@
 {
   "project_id": "YOUR_PROJECT_ID",
   "location": "us",
-  "processor_id": "YOUR_PROCESSOR_ID"
+  "processor_id": "YOUR_PROCESSOR_ID",
+  "min_year": 2000,
+  "max_year": 2030,
+  "default_year": 2023
 }
