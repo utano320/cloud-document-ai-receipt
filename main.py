@@ -39,11 +39,11 @@ for filename in os.listdir(RECEIPT_FOLDER):
 
                 # OCR結果をlogsに保存
                 now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-                log_filename = f"{new_filename_base}_{now_str}.json"
+                log_filename = f"{new_filename_base}_{now_str}.txt"
                 log_path = os.path.join(LOGS_FOLDER, log_filename)
 
                 with open(log_path, "w", encoding="utf-8") as f:
-                    json.dump({"text": text}, f, ensure_ascii=False, indent=2)
+                    f.write(text)
 
                 print(f"✅ {new_filename} にリネーム & OCR結果保存しました！")
 
