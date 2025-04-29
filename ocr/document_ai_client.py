@@ -14,6 +14,9 @@ with open("config/settings.json", "r", encoding="utf-8") as f:
 PROJECT_ID = settings["project_id"]
 LOCATION = settings["location"]
 PROCESSOR_ID = settings["processor_id"]
+MIN_YEAR = settings.get("min_year", 2000)  # デフォルト値として2000を設定
+MAX_YEAR = settings.get("max_year", 2030)  # デフォルト値として2030を設定
+DEFAULT_YEAR = settings.get("default_year", 2023)  # デフォルト値として2023を設定
 
 def analyze_receipt(file_path: str) -> str:
     """
