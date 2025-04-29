@@ -1,5 +1,7 @@
 {
   "project_id": "YOUR_PROJECT_ID",
   "location": "us",
-  "processor_id": "YOUR_PROCESSOR_ID"
+  "processor_id": "YOUR_PROCESSOR_ID",
+  "preferred_store_names": [],
+  "excluded_store_names": []
 }

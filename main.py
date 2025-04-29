@@ -28,7 +28,7 @@ for filename in os.listdir(RECEIPT_FOLDER):
             # 日付・店名抽出
             date, store = extract_date_and_store(text)
 
-            if date and store:
+            if date:  # date が存在する場合（store が「未取得」でも処理を続行）
                 safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
                 new_filename_base = f"{date}_{safe_store}"
                 new_filename = f"{new_filename_base}.jpg"
@@ -48,7 +48,7 @@ for filename in os.listdir(RECEIPT_FOLDER):
                 print(f"✅ {new_filename} にリネーム & OCR結果保存しました！")
 
             else:
-                print(f"⚠️ 日付か店名の抽出に失敗しました: {filename}")
+                print(f"⚠️ 日付の抽出に失敗しました: {filename}")
 
         except Exception as e:
             print(f"❌ エラーが発生しました: {e}")
