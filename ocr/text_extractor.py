@@ -56,8 +56,11 @@ def extract_date_and_store(text: str):
         lines = text.splitlines()
         for line in lines:
             line = line.strip()
-            if line in preferred_store_names:
-                store = line
+            for preferred_name in preferred_store_names:
+                if preferred_name in line:
+                    store = line
+                    break
+            if store != "未取得":
                 break
     
     if store == "未取得":
@@ -65,7 +68,12 @@ def extract_date_and_store(text: str):
         for line in lines:
             line_stripped = line.strip()
             if line_stripped and 2 <= len(line_stripped) <= 30 and not re.search(r"\d", line_stripped):
-                if line_stripped not in excluded_store_names:
+                is_excluded = False
+                for excluded_name in excluded_store_names:
+                    if excluded_name in line_stripped:
+                        is_excluded = True
+                        break
+                if not is_excluded:
                     store = line_stripped
                     break
 
