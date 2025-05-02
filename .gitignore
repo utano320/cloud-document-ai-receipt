@@ -1,8 +1,8 @@
 config/settings.json
 keys/*.json
 logs/*.txt
-receipts/*.jpg
-receipts/*.png
+receipts/**/*.jpg
+receipts/**/*.png
 renamed_receipts/*.jpg
 renamed_receipts/*.png
 __pycache__
