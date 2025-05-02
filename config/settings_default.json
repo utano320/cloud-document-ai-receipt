@@ -6,5 +6,8 @@
   "max_year": 2030,
   "default_year": 2023,
   "preferred_store_names": [],
-  "excluded_store_names": []
+  "excluded_store_names": [],
+  "receipt_folder": "receipts/",
+  "renamed_receipt_folder": "renamed_receipts/",
+  "logs_folder": "logs/"
 }

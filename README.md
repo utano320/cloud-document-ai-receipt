@@ -31,6 +31,7 @@ pip install google-auth
 ### 必要なファイルの配置
 
 - `config/settings_default.json` をコピーして `config/settings.json`を作成し、プロジェクト ID、プロセッサー ID をセット
+- レシートの入出力フォルダのパスを設定（デフォルトは `"receipt_folder": "receipts/"`, `"renamed_receipt_folder": "renamed_receipts/"`, `"logs_folder": "logs/"`）
 - `keys/service-account.json` としてサービスアカウントの認証キーを配置
 - `receipts`ディレクトリ配下に元データとなるレシートの画像ファイルを配置
 
