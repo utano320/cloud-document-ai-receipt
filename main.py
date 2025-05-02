@@ -7,10 +7,14 @@ import shutil
 import json
 from datetime import datetime
 
+settings_path = "config/settings.json"
+with open(settings_path, "r", encoding="utf-8") as f:
+    settings = json.load(f)
+
 # パス設定
-RECEIPT_FOLDER = "receipts/"
-RENAMED_FOLDER = "renamed_receipts/"
-LOGS_FOLDER = "logs/"
+RECEIPT_FOLDER = settings.get("receipt_folder", "receipts/")
+RENAMED_FOLDER = settings.get("renamed_receipt_folder", "renamed_receipts/")
+LOGS_FOLDER = settings.get("logs_folder", "logs/")
 
 os.makedirs(RENAMED_FOLDER, exist_ok=True)
 os.makedirs(LOGS_FOLDER, exist_ok=True)
