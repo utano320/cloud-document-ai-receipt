@@ -37,8 +37,8 @@ fi
 
 if [ "$1" = "--all" ]; then
     if [ -d "$receipt_folder" ]; then
-        receipts_count=$(find "$receipt_folder" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) | wc -l)
-        find "$receipt_folder" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -delete
+        receipts_count=$(find "$receipt_folder" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -not -path "$receipt_folder/fixed/*" | wc -l)
+        find "$receipt_folder" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) -not -path "$receipt_folder/fixed/*" -delete
     fi
 fi
 
