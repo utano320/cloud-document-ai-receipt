@@ -15,9 +15,11 @@ with open(settings_path, "r", encoding="utf-8") as f:
 RECEIPT_FOLDER = settings.get("receipt_folder", "receipts/")
 RENAMED_FOLDER = settings.get("renamed_receipt_folder", "renamed_receipts/")
 LOGS_FOLDER = settings.get("logs_folder", "logs/")
+FIXED_FOLDER = os.path.join(RECEIPT_FOLDER, "fixed/")
 
 os.makedirs(RENAMED_FOLDER, exist_ok=True)
 os.makedirs(LOGS_FOLDER, exist_ok=True)
+os.makedirs(FIXED_FOLDER, exist_ok=True)
 
 # ファイルを順番に処理
 for filename in os.listdir(RECEIPT_FOLDER):
@@ -44,6 +46,9 @@ for filename in os.listdir(RECEIPT_FOLDER):
 
             # 画像ファイルコピーしてリネーム
             shutil.copy(file_path, new_path)
+            
+            fixed_path = os.path.join(FIXED_FOLDER, filename)
+            shutil.move(file_path, fixed_path)
 
             # OCR結果をlogsに保存
             now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -53,7 +58,7 @@ for filename in os.listdir(RECEIPT_FOLDER):
             with open(log_path, "w", encoding="utf-8") as f:
                 f.write(text)
 
-            print(f"✅ {new_filename} にリネーム & OCR結果保存しました！")
+            print(f"✅ {new_filename} にリネーム & OCR結果保存しました！ 元ファイルは {fixed_path} に移動しました。")
 
         except Exception as e:
             print(f"❌ エラーが発生しました: {e}")
