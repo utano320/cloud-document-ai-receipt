@@ -26,7 +26,7 @@ def extract_date_and_store(text: str):
     date_patterns = [
         r"(\d{4}[/-]\d{1,2}[/-]\d{1,2})",
         r"(\d{2}[/-]\d{1,2}[/-]\d{1,2})",
-        r"(\d{4}年\d{1,2}月\d{1,2}日)"
+        r"(\d{4}年\s*\d{1,2}月\s*\d{1,2}日)"
     ]
 
     all_dates = []
