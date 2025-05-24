@@ -6,3 +6,5 @@ receipts/**/*.png
 renamed_receipts/*.jpg
 renamed_receipts/*.png
 __pycache__
+
+.DS_Store
