@@ -34,13 +34,11 @@ for filename in os.listdir(RECEIPT_FOLDER):
             # 日付・店名抽出
             date, store = extract_date_and_store(text)
 
+            original_filename_base = os.path.splitext(filename)[0]
+            safe_original = original_filename_base.replace(" ", "_").replace("/", "_").replace("\\", "_")
+            
             safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
-            new_filename_base = f"{date}_{safe_store}"
-            new_filename = f"{new_filename_base}.jpg"
-            new_path = os.path.join(RENAMED_FOLDER, new_filename)
-
-            safe_store = store.replace(" ", "_").replace("/", "_").replace("\\", "_")
-            new_filename_base = f"{date}_{safe_store}"
+            new_filename_base = f"{date}_{safe_store}_{safe_original}"
             new_filename = f"{new_filename_base}.jpg"
             new_path = os.path.join(RENAMED_FOLDER, new_filename)
 
