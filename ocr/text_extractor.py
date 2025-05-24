@@ -54,24 +54,16 @@ def extract_date_and_store(text: str):
                     
                     raw_date = f"{year}{month}{day}"
             else:
-                raw_date = re.sub(r"[年月]", "", raw_date)
-                raw_date = raw_date.replace("日", "")
-                raw_date = raw_date.replace(" ", "")
+                year_match = re.search(r'(\d{4})年', raw_date)
+                month_match = re.search(r'(\d{1,2})月', raw_date)
+                day_match = re.search(r'(\d{1,2})日', raw_date)
                 
-                year_match = re.search(r'^(\d{4})', raw_date)
-                if year_match:
+                if year_match and month_match and day_match:
                     year = year_match.group(1)
-                    remaining = raw_date[4:]
+                    month = month_match.group(1).zfill(2)  # ゼロ詰め
+                    day = day_match.group(1).zfill(2)      # ゼロ詰め
                     
-                    if len(remaining) >= 2:
-                        if len(remaining) >= 3 and remaining[1].isdigit():
-                            month = remaining[:2]
-                            day = remaining[2:].zfill(2)
-                        else:
-                            month = remaining[0].zfill(2)
-                            day = remaining[1:].zfill(2)
-                        
-                        raw_date = f"{year}{month}{day}"
+                    raw_date = f"{year}{month}{day}"
 
             # 6桁（yyMMdd）だったら西暦補完
             if len(raw_date) == 6:
