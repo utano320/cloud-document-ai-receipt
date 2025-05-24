@@ -26,7 +26,10 @@ def extract_date_and_store(text: str):
     date_patterns = [
         r"(\d{4}[/-]\d{1,2}[/-]\d{1,2})",
         r"(\d{2}[/-]\d{1,2}[/-]\d{1,2})",
-        r"(\d{4}年\s*\d{1,2}月\s*\d{1,2}日)"
+        r"(\d{4}年\s*\d{1,2}月\s*\d{1,2}日)",
+        r"(\d{4}年\s*\d{1,2}月\s*\d{1,2}日)\s*\([^)]*\)",  # with weekday in parentheses
+        r"(\d{4}年\s*\d{1,2}月\s*\d{1,2}日)\s*\([^)]*\)\s*\d{1,2}:\d{2}",  # with weekday and time
+        r"(\d{4}年\s*\d{1,2}月\s*\d{1,2}日)\s*\([^)]*\)\s*\d{1,2}:\d{2}[^0-9]*"  # with weekday, time and trailing chars
     ]
 
     all_dates = []
@@ -38,6 +41,7 @@ def extract_date_and_store(text: str):
             raw_date = re.sub(r"[/-]", "", raw_date)
             raw_date = re.sub(r"[年月]", "", raw_date)
             raw_date = raw_date.replace("日", "")
+            raw_date = raw_date.replace(" ", "")
 
             # 6桁（yyMMdd）だったら西暦補完
             if len(raw_date) == 6:
