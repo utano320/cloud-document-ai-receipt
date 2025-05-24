@@ -38,20 +38,49 @@ def extract_date_and_store(text: str):
         matches = re.finditer(pattern, text)
         for match in matches:
             raw_date = match.group(1)
-            raw_date = re.sub(r"[/-]", "", raw_date)
-            raw_date = re.sub(r"[年月]", "", raw_date)
-            raw_date = raw_date.replace("日", "")
-            raw_date = raw_date.replace(" ", "")
+            
+            if '/' in raw_date or '-' in raw_date:
+                parts = re.split(r'[/-]', raw_date)
+                if len(parts) == 3:
+                    year = parts[0]
+                    month = parts[1]
+                    day = parts[2]
+                    
+                    if len(year) == 2:
+                        year = "20" + year
+                        
+                    month = month.zfill(2)
+                    day = day.zfill(2)
+                    
+                    raw_date = f"{year}{month}{day}"
+            else:
+                raw_date = re.sub(r"[年月]", "", raw_date)
+                raw_date = raw_date.replace("日", "")
+                raw_date = raw_date.replace(" ", "")
+                
+                year_match = re.search(r'^(\d{4})', raw_date)
+                if year_match:
+                    year = year_match.group(1)
+                    remaining = raw_date[4:]
+                    
+                    if len(remaining) >= 2:
+                        if len(remaining) >= 3 and remaining[1].isdigit():
+                            month = remaining[:2]
+                            day = remaining[2:].zfill(2)
+                        else:
+                            month = remaining[0].zfill(2)
+                            day = remaining[1:].zfill(2)
+                        
+                        raw_date = f"{year}{month}{day}"
 
             # 6桁（yyMMdd）だったら西暦補完
             if len(raw_date) == 6:
                 raw_date = "20" + raw_date
 
-            # yyyymmdd形式にゼロ詰め
             if len(raw_date) == 8:
                 yyyy = raw_date[:4]
-                mm = raw_date[4:6].zfill(2)
-                dd = raw_date[6:8].zfill(2)
+                mm = raw_date[4:6]
+                dd = raw_date[6:8]
                 
                 year_valid = MIN_YEAR <= int(yyyy) <= MAX_YEAR
                 
